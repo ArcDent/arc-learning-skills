@@ -42,29 +42,54 @@ arc-materials → arc-distill → ┬ arc-concept-quiz 查概念理解
 
 ## 快速开始
 
+需要 [Node.js](https://nodejs.org) 22.20 以上。在终端里选一种装法运行：
+
 ```sh
-# 1. 克隆本仓库
-git clone <本仓库的 git 地址> ~/arc-learning-skills
+# 全局安装：装进 ~/.claude/skills/，所有项目都能用
+npx skills add ArcDent/arc-learning-skills -g -a claude-code -y
 
-# 2. 进入你存放课程资料的学习仓库
-cd <你的学习仓库>
+# 项目级安装：在你的学习仓库根目录运行，装进 .claude/skills/
+npx skills add ArcDent/arc-learning-skills -a claude-code -y
+```
 
-# 3. 链接 7 个 skill：Claude Code 从 .claude/skills 加载，学习地图从 .agents/skills 读取
-mkdir -p .claude/skills .agents/skills
-ln -s ~/arc-learning-skills/arc-* .claude/skills/
-ln -s ~/arc-learning-skills/arc-* .agents/skills/
+`-a claude-code` 表示装给 Claude Code，`-y` 跳过安装过程中的提问，直接装全部 7 个。用 Codex、Cursor 等其他 agent 时，去掉 `-a claude-code`，按提示选择。
 
-# 4. .local/ 里放参考答案、token 和登记表，别提交进 git
+装好后，在学习仓库里把 `.local/` 加进 `.gitignore`。参考答案、token 和登记表都放在这里，别提交进 git：
+
+```sh
 echo "/.local/" >> .gitignore
 ```
 
-装好后在 Claude Code 里输入 `/arc-learning-map` 看速查表，或者直接用 `/arc-materials` 导入第一份讲义。
+然后在 Claude Code 里输入 `/arc-learning-map` 看速查表，或者直接用 `/arc-materials` 导入第一份讲义。看不到这些命令时，重开一次 Claude Code 会话。
+
+以后更新或卸载：
+
+```sh
+npx skills update        # 更新项目级安装
+npx skills update -g     # 更新全局安装
+npx skills remove ArcDent/arc-learning-skills       # 卸载项目级安装
+npx skills remove ArcDent/arc-learning-skills -g    # 卸载全局安装
+```
+
+项目级安装会在仓库根目录生成 `skills-lock.json`，记下装了哪些 skill，更新时要用到，别删。
 
 材料转换还会用到：
 
 - [uv](https://docs.astral.sh/uv/)：运行转换脚本，依赖在第一次运行时自动安装。
 - [MinerU](https://mineru.net) 的 API token：PDF 和 Office 文档默认交给 MinerU 云端解析。没有 token 或不想上传时，`/arc-materials` 会改走本地转换或看图转写。
 - `officecli`：转换 Excel 表格，或者不用 MinerU 处理 Office 文档时使用。
+
+### 没装 Node 时手动安装
+
+macOS 和 Linux 上用 git 克隆本仓库，再软链进去：
+
+```sh
+git clone https://github.com/ArcDent/arc-learning-skills.git ~/arc-learning-skills
+mkdir -p ~/.claude/skills
+ln -s ~/arc-learning-skills/arc-* ~/.claude/skills/
+```
+
+这样是全局安装。只想装进一个学习仓库，就把后两行的 `~/.claude/skills` 换成那个仓库里的 `.claude/skills`。以后更新只要运行 `git -C ~/arc-learning-skills pull`。
 
 ## 许可证
 
