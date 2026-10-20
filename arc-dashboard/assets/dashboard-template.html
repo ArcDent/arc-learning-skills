@@ -514,10 +514,11 @@ SOFTWARE. */
 
     .vl, .bl { list-style: none; }
     .vl { counter-reset: v; }
-    .vl li { counter-increment: v; display: grid; grid-template-columns: 44px 1fr 56px 86px 66px; gap: 14px; padding: 12px 0; border-bottom: 1px solid var(--hair); font-size: 14px; align-items: baseline; }
+    .vl li { counter-increment: v; display: grid; grid-template-columns: 44px 1fr 36px 56px 86px 66px; gap: 14px; padding: 12px 0; border-bottom: 1px solid var(--hair); font-size: 14px; align-items: baseline; }
     .vl li:first-child, .bl li:first-child { padding-top: 0; }
     .vl li::before { content: counter(v, decimal-leading-zero); font: 700 20px/1 var(--f-swiss); color: var(--accent); letter-spacing: -.02em; }
     .vl .vm { display: contents; }
+    .vl .src { font-size: 12.5px; color: var(--ink3); }
     .vl .id { font: 500 12px/1.6 var(--f-mono); color: var(--ink3); }
     .vl .d { font-size: 12.5px; color: var(--ink3); font-variant-numeric: tabular-nums; }
     .vl .st { font-size: 12px; font-weight: 700; text-align: right; }
@@ -582,11 +583,11 @@ SOFTWARE. */
       & td { padding-right: 8px; }
       & td.big { font-size: 20px; }
 
-      /* 漏洞：描述一行，编号 · 日期 · 状态并成一行 */
+      /* 漏洞：描述一行，来源 · 编号 · 日期 · 状态并成一行 */
       .vl li { grid-template-columns: 30px minmax(0, 1fr); gap: 6px 10px; }
       .vl li::before { grid-row: 1 / span 2; font-size: 18px; }
       .vl .vm { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 14px; grid-column: 2; }
-      .vl .id:empty { display: none; }
+      .vl .src:empty, .vl .id:empty { display: none; }
       .vl .st { text-align: left; }
       .bl li { grid-template-columns: 30px minmax(0, 1fr); gap: 4px 10px; }
       .bl li::before { grid-row: 1 / span 2; font-size: 18px; }
@@ -719,7 +720,7 @@ __ARC_DASHBOARD_DATA__
   var acts = arr(D.activity).filter(function (a) { return a && typeof a === "object"; });
   var blocked = arr(D.blocked).filter(function (b) { return b && typeof b === "object"; });
   var G = obj(D.guidance), topics = arr(D.topics);
-  var vOpen = vulns.filter(function (v) { return !v.rePracticed; }).length;
+  var VC = obj(D.vulnerabilityCounts), vOpen = num(VC.open), vTotal = num(VC.total);
   var lit = ct - num(cbs.untested);
   var hasAny = !!(ct || dt || qt || vulns.length || blocked.length || acts.length);
   var ST = [["mastered", "已掌握"], ["pending", "待复验"], ["misconceived", "有误解"], ["untested", "未测"]];
@@ -737,7 +738,7 @@ __ARC_DASHBOARD_DATA__
   }
   var WORDS = {
     plain: {
-      vuln: ["条漏洞待重练", "针对漏洞出题，下次刷新本页即标为已重练"], mis: ["个概念有误解", "回到问答里纠正"],
+      vuln: ["条漏洞待重练", "针对漏洞出题，重新生成本页后标为已重练"], mis: ["个概念有误解", "回到问答里纠正"],
       blocked: ["个概念被前置卡住", "先把缺的前置问清楚"], pending: ["个概念待复验", "到期复验，确认真的掌握"],
       untested: ["个考点未开测", "问答结果回写 concepts.md，方格随之上色"], distill: ["份材料未凝练", "notes/ 里还没提炼成考点的讲义"]
     },
@@ -830,8 +831,8 @@ __ARC_DASHBOARD_DATA__
       }
       body += starDuo(typeBlk, drillBlk);
 
-      var vulnBlk = vulns.length ? starBlk("DARK SPOTS", "暗斑 · 漏洞", "对局中暴露的薄弱点", '<ul class="spots">' + vulns.map(function (v) {
-        return '<li><span class="dot' + (v.rePracticed ? " ok" : "") + '"></span><span>' + rich(v.desc) + '</span><span class="meta">' + (v.id ? esc(v.id) + " · " : "") + esc(v.date) +
+      var vulnBlk = vulns.length ? starBlk("DARK SPOTS", "暗斑 · 漏洞", "问答与对局中暴露的薄弱点", '<ul class="spots">' + vulns.map(function (v) {
+        return '<li><span class="dot' + (v.rePracticed ? " ok" : "") + '"></span><span>' + rich(v.desc) + '</span><span class="meta">' + (v.source ? esc(v.source) + " · " : "") + (v.id ? esc(v.id) + " · " : "") + esc(v.date) +
           '<em class="' + (v.rePracticed ? "ok" : "") + '">' + (v.rePracticed ? "已重练" : "待重练") + "</em></span></li>";
       }).join("") + "</ul>") : "";
       var blockBlk = blocked.length ? starBlk("ECLIPSE", "依赖阻塞", "前置还没点亮，这些星被挡住了", '<ul class="ecl">' + blocked.map(function (b) {
@@ -1298,8 +1299,8 @@ __ARC_DASHBOARD_DATA__
             return "<tr><td>" + esc(t) + '</td><td class="num">' + num(o.passed) + '</td><td class="num">' + num(o.surrendered) + '</td><td class="num">' + num(o.open) + '</td><td class="num">' + sum(o) + "</td></tr>";
           }).join("") + "</tbody></table>" };
       }
-      if (vulns.length) mVulns = { icon: "bandage", title: "勘误表 · 漏洞", note: "对局中暴露，按日期倒序", span: 8, inner: '<table class="tbl errata"><tbody>' + vulns.map(function (v) {
-        return '<tr><td class="id' + (v.id ? "" : " none") + '">' + (v.id ? esc(v.id) : "—") + '</td><td class="desc">' + rich(v.desc) + '</td><td class="d">' + esc(v.date) +
+      if (vulns.length) mVulns = { icon: "bandage", title: "勘误表 · 漏洞", note: "问答与对局中暴露，按日期倒序", span: 8, inner: '<table class="tbl errata"><tbody>' + vulns.map(function (v) {
+        return '<tr><td class="id' + (v.id ? "" : " none") + '">' + (v.id ? esc(v.id) : "—") + '</td><td class="desc">' + rich(v.desc) + '</td><td class="d">' + (v.source ? esc(v.source) + " · " : "") + esc(v.date) +
           '</td><td><span class="tag' + (v.rePracticed ? " ok" : "") + '">' + (v.rePracticed ? "已重练" : "待重练") + "</span></td></tr>";
       }).join("") + "</tbody></table>" };
       if (blocked.length) mBlocked = { icon: "lock", title: "依赖阻塞", note: "前置未掌握", span: 5, inner: '<ul class="chain">' + blocked.map(function (b) {
@@ -1340,7 +1341,7 @@ __ARC_DASHBOARD_DATA__
       if (ct) figs.push('<div class="fig"><div class="n">' + ct + '</div><div class="l">考点在册</div><div class="s">' + (lit ? "已测 " + lit : "尚未开测") + "</div></div>");
       if (dt) figs.push('<div class="fig"><div class="n">' + num(dr.passed) + "<small>/" + dt + '</small></div><div class="l">解题对局通过</div><div class="s">' +
         Object.keys(dbt).filter(function (t) { return sum(dbt[t]) > 0; }).map(esc).join("、") + "</div></div>");
-      if (vOpen) figs.push('<div class="fig hot"><div class="n">' + vOpen + '</div><div class="l">漏洞待重练</div><div class="s">共 ' + vulns.length + " 条记录</div></div>");
+      if (vOpen) figs.push('<div class="fig hot"><div class="n">' + vOpen + '</div><div class="l">漏洞待重练</div><div class="s">共 ' + vTotal + " 条记录</div></div>");
       if (qt) figs.push('<div class="fig"><div class="n">' + qt + '</div><div class="l">累计出题</div><div class="s">' + QG.map(function (g) { return g[1]; }).join(" · ") + "</div></div>");
     }
     if (figs.length) out += '<div class="figures f' + figs.length + '">' + figs.join("") + "</div>";
@@ -1387,8 +1388,8 @@ __ARC_DASHBOARD_DATA__
             return "<tr><td>" + esc(t) + '</td><td class="num big">' + num(o.passed) + '</td><td class="num">' + num(o.surrendered) + '</td><td class="num">' + num(o.open) + '</td><td class="num">' + sum(o) + "</td></tr>";
           }).join("") + "</tbody></table>");
       }
-      if (vulns.length) html += sec("漏洞清单", "对局中暴露，按日期倒序", '<ul class="vl">' + vulns.map(function (v) {
-        return "<li><span>" + rich(v.desc) + '</span><span class="vm"><span class="id">' + esc(v.id || "") + '</span><span class="d">' + esc(v.date) + '</span><span class="st' +
+      if (vulns.length) html += sec("漏洞清单", "问答与对局中暴露，按日期倒序", '<ul class="vl">' + vulns.map(function (v) {
+        return "<li><span>" + rich(v.desc) + '</span><span class="vm"><span class="src">' + esc(v.source || "") + '</span><span class="id">' + esc(v.id || "") + '</span><span class="d">' + esc(v.date) + '</span><span class="st' +
           (v.rePracticed ? " ok" : "") + '">' + (v.rePracticed ? "已重练" : "待重练") + "</span></span></li>";
       }).join("") + "</ul>");
       if (blocked.length) html += sec("依赖阻塞", "前置还没掌握", '<ul class="bl">' + blocked.map(function (b) {
