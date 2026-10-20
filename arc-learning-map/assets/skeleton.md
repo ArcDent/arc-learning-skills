@@ -10,7 +10,7 @@ arc-materials → arc-distill → ┬ arc-concept-quiz 查概念理解
                               └ → arc-dashboard 进度看板
 ```
 
-支线说明：materials 把新材料转成 md，distill 把 md 提炼成概念清单 `concepts.md`。之后三条支线可任意组合、反复使用。concept-quiz 检验概念是否真懂，examiner 出一批题练手，拿到题想被引导着做就进 socratic-drill。dashboard 随时可看，不依赖顺序。三条支线靠 `concepts.md` 的概念 id（如 `D-012`）互相对上：examiner 的考点、drill 的漏洞、concept-quiz 的结果都记 id。
+支线说明：materials 把新材料转成 md，distill 把 md 提炼成概念清单 `concepts.md`。之后三条支线可任意组合、反复使用。concept-quiz 检验概念是否真懂，examiner 出一批题练手，拿到题想被引导着做就进 socratic-drill。dashboard 随时可看，不依赖顺序。三条支线靠 `concepts.md` 的概念 id（如 `D-012`）互相对上：examiner 的考点、drill 的漏洞、concept-quiz 的结果与漏洞都记 id。
 
 ## 使用场景
 

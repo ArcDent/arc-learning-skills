@@ -1,8 +1,8 @@
-# 概念问答对局文件格式
+# 概念问答文件格式
 
-对局文件落 `{课题夹}/concept-sessions/YYYY-MM-DD-概念问答.md`，同日已有同名文件加序号 `-2`、`-3`，目录不存在则创建。
+问答文件落 `{课题夹}/concept-sessions/YYYY-MM-DD-概念问答.md`，同日已有同名文件加序号 `-2`、`-3`，目录不存在则创建。
 
-## 对局文件模板
+## 问答文件模板
 
 首行状态标记机器可读，供续场识别，不得省略。
 
@@ -46,13 +46,19 @@
 
 - {id} {概念名}：{旧状态} → {新状态}（过 / 订正后过 / ⚠ / 跳过 / 复验 ☑）
 - 同类小错：{点名一次；没有写「无」}
+- 漏洞：{描述} [D-xxx] @ YYYY-MM-DD
 - 结果：过 N 个，⚠ N 个，跳过 N 个，复验 N 个
 ```
 
+## 漏洞行
+
+- 一条一行，与 arc-socratic-drill 通关总结同格式；`[D-xxx]` 填该概念的 id，日期写记录当天；没有写「- 漏洞：无」。
+
 ## 状态标记与登记
 
-- 状态标记二选一：`<!-- arc-concept: open -->` 进行中，`<!-- arc-concept: done -->` 已完结（含作废）。
-- `.local/quiz-index.jsonl` 每场一行 JSON：`date`、`topic`、`results[]`、`file`。`results[]` 每概念一项：`id`、`name`、`old`、`new`。判 ⚠ 的加 `misconception` 存误解原文，跳过的加 `skipped: true`。作废的场次不登记。
+- 状态标记二选一：`<!-- arc-concept: open -->` 进行中，`<!-- arc-concept: done -->` 已完结。
+- 作废：首行改 `done`，文件末尾写「- 结果：中止于第 N 批，本批未回写」，再补写第 N 批之前各批的漏洞行；不登记。
+- `.local/quiz-index.jsonl` 每场一行 JSON：`date`、`topic`、`results[]`、`file`。`results[]` 每概念一项：`id`、`name`、`old`、`new`，跳过的加 `skipped: true`。
 
 ## 问法库
 

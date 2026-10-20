@@ -40,7 +40,7 @@ disable-model-invocation: true
 **随便出**：用户说「随便出」就改为自适应选题，按优先级读三处：
 
 1. 课题 `concepts.md` 里状态为 ⚠ 的条目，即概念问答判过误解的概念。
-2. 各课题 `drills/` 对局文件「通关总结」里的 `- 漏洞：` 条目，按其中的 `[D-xxx]` 对应到概念；已通关场的漏洞优先，未通关场次之。
+2. 各课题 `drills/` 对局文件「通关总结」与 `concept-sessions/` 问答文件里的 `- 漏洞：` 条目，按其中的 `[D-xxx]` 对应到概念；认输场的漏洞排最后。
 3. `.local/answers/index.jsonl` 的 `topics[]`，看哪些概念已经出过题、哪些还空着。
 
 据此挑 1-2 个薄弱概念并定难度档，题型默认简答，覆盖范围即所选概念。
@@ -95,6 +95,6 @@ disable-model-invocation: true
 
 ## 注意
 
-- **与 arc-socratic-drill 的联动**：本 skill 读取 drill 通关总结里带 id 的漏洞来自适应选题；drill 接受本 skill 的题目文件作为题目来源，见其 SKILL.md 开场节。
+- **与 arc-socratic-drill 的联动**：drill 接受本 skill 的题目文件作为题目来源，见其 SKILL.md 开场节。
 - 自编题目标注「自编」，从材料改编的题注明出处，不得假装是教材原题。
 - 不出纯记忆背诵题，除非用户点名。
