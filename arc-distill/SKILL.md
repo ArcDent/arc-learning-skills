@@ -1,6 +1,6 @@
 ---
 name: arc-distill
-description: 要点提炼。从 notes/ 下的 markdown 产物提炼概念公式要点，合并进课题 concepts.md。触发：提炼要点、凝练概念、distill。全程中文。
+description: 从课题 notes/ 里的 markdown 提炼定义、公式等考点，合并进课题的 concepts.md，每条都能追回原文。
 disable-model-invocation: true
 ---
 

@@ -1,6 +1,6 @@
 ---
 name: arc-learning-map
-description: 学习地图。汇总 arc 系列 skill 的职责与触发词，输出对话速查表，仅限手动调用。触发：学习地图、arc 地图。全程中文。
+description: 在对话里列出 arc 系列每个 skill 管什么、怎么调用，并讲清三个做题类 skill 的区别。
 disable-model-invocation: true
 ---
 
@@ -19,7 +19,7 @@ disable-model-invocation: true
 ## 数据源
 
 - 静态骨架：流程图、使用场景映射、易混区别都见 `assets/skeleton.md`，仅流程或易混关系变化时更新。
-- 职责与触发词：按前缀通配扫本 skill 目录（启动时给出的 Base directory）的同级 `../arc-*/SKILL.md`，不写死名单，读 frontmatter 的 `description`。全局、项目级哪种装法都适用，装了几个就列几个。缺某段就如实标「未写明」，不编。
+- 职责：按前缀通配扫本 skill 目录（启动时给出的 Base directory）的同级 `../arc-*/SKILL.md`，不写死名单，读 frontmatter 的 `description`。全局、项目级哪种装法都适用，装了几个就列几个。缺 description 就标「未写明」，不编。
 
 ## 输出格式
 
@@ -30,8 +30,8 @@ disable-model-invocation: true
 
 ```
 <skill名字>
-- 职责:<description 第一句>
-- 调用:/<skill名>（触发词:<触发词>）
+- 职责:<description>
+- 调用:/<skill名>
 - 使用场景:<skeleton 固定映射>
 ```
 
@@ -39,7 +39,7 @@ disable-model-invocation: true
 
 ```
 <skill名>
-- 职责:<description 第一句>
+- 职责:<description>
 - 区别:<skeleton 易混区别>
 ```
 

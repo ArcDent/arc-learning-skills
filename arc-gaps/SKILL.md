@@ -1,6 +1,6 @@
 ---
 name: arc-gaps
-description: 漏洞清单。问用户要补的漏洞，写进课题 gaps.md，也可改写、删除已有条目；顺带把旧问答与对局文件里的漏洞行迁进清单。触发：记个漏洞、补漏洞、漏洞清单、arc-gaps。全程中文。
+description: 问用户要补哪条漏洞，记进课题的 gaps.md 漏洞清单，也能改写或删除已有条目。
 disable-model-invocation: true
 ---
 

@@ -1,6 +1,6 @@
 ---
 name: arc-materials
-description: 材料摄入。把 PDF/Office/图片/EPUB/HTML 转成 markdown 落到课题 notes/ 并登记。触发：转换材料、材料转 md、材料入库。全程中文。
+description: 把 PDF、Office 文档、EPUB、图片和网页等学习材料转成 markdown，存进课题的 notes/ 并登记。
 disable-model-invocation: true
 ---
 

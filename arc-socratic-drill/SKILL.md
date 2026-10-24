@@ -1,6 +1,6 @@
 ---
 name: arc-socratic-drill
-description: 苏格拉底式答题对局。接用户给的题，每轮先问学生下一步怎么做，引导学生自己想出每一步，收尾写解题骨架通关。触发：考我这道题、答题、继续答题。全程中文。
+description: 接用户给的一道题，每轮先问学生下一步怎么做，引导学生自己做出来并写出解题骨架。
 disable-model-invocation: true
 ---
 

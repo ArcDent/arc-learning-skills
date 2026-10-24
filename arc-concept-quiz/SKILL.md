@@ -1,6 +1,6 @@
 ---
 name: arc-concept-quiz
-description: 概念问答。从课题 concepts.md 抽 ☐/⚠ 概念，一批 5 题让学生解释，按核心点批改，答错就讲，回写状态。触发：考我概念、概念问答、继续概念问答。全程中文。
+description: 从课题 concepts.md 里抽概念，一批 5 题让学生用自己的话解释，按核心点批改并回写掌握状态。
 disable-model-invocation: true
 ---
 

@@ -1,6 +1,6 @@
 ---
 name: arc-dashboard
-description: 进度仪表盘。从学习数据源算指标注入模板生成 dashboard.html，缺数据就省略，不编数。触发：更新仪表盘、看看进度。全程中文。
+description: 从概念清单、问答与对局记录、漏洞清单和出题记录现算学习进度，生成浏览器能直接打开的 dashboard.html。
 disable-model-invocation: true
 ---
 

@@ -1,6 +1,6 @@
 ---
 name: arc-examiner
-description: 出题官。按指定材料或知识点出 3-5 道练习题，出完即停。触发：出几道题、给我出题、examiner。全程中文。
+description: 按指定材料或概念出 3 到 5 道练习题，题目和参考答案分开存放，出完即停。
 disable-model-invocation: true
 ---
 
