@@ -7,10 +7,11 @@ arc-learning-map 的静态数据：只有流程顺序或易混关系变化时才
 ```
 arc-materials → arc-distill → ┬ arc-concept-quiz 查概念理解
                               ├ arc-examiner 出题自练 → arc-socratic-drill 对局解题
+                              ├ arc-gaps 补记漏洞
                               └ → arc-dashboard 进度看板
 ```
 
-支线说明：materials 把新材料转成 md，distill 把 md 提炼成概念清单 `concepts.md`。之后三条支线可任意组合、反复使用。concept-quiz 检验概念是否真懂，examiner 出一批题练手，拿到题想被引导着做就进 socratic-drill。dashboard 随时可看，不依赖顺序。三条支线靠 `concepts.md` 的概念 id（如 `D-012`）互相对上：examiner 的考点、drill 的漏洞、concept-quiz 的结果与漏洞都记 id。
+支线说明：materials 把新材料转成 md，distill 把 md 提炼成概念清单 `concepts.md`。之后三条支线可任意组合、反复使用。concept-quiz 检验概念是否真懂，examiner 出一批题练手，拿到题想被引导着做就进 socratic-drill。dashboard 随时可看，不依赖顺序。漏洞统一记在课题 `gaps.md`：concept-quiz 和 socratic-drill 自动写，arc-gaps 手动补、改、删，examiner 和 dashboard 只读它。三条支线靠 `concepts.md` 的概念 id（如 `D-012`）互相对上：examiner 的考点、concept-quiz 的结果、`gaps.md` 的漏洞都记 id。
 
 ## 使用场景
 
@@ -23,6 +24,7 @@ arc-materials → arc-distill → ┬ arc-concept-quiz 查概念理解
 | arc-concept-quiz | 想检验概念有没有真懂时 |
 | arc-examiner | 想要一批练习题时 |
 | arc-socratic-drill | 有一道题做不出来，想被引导着做时 |
+| arc-gaps | 想手动补记、改写或删掉一条漏洞时 |
 | arc-dashboard | 想看整体学习进度时 |
 
 ## 易混区别

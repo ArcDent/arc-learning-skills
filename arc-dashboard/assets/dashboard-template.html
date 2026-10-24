@@ -514,11 +514,11 @@ SOFTWARE. */
 
     .vl, .bl { list-style: none; }
     .vl { counter-reset: v; }
-    .vl li { counter-increment: v; display: grid; grid-template-columns: 44px 1fr 36px 56px 86px 66px; gap: 14px; padding: 12px 0; border-bottom: 1px solid var(--hair); font-size: 14px; align-items: baseline; }
+    .vl li { counter-increment: v; display: grid; grid-template-columns: 44px 1fr 76px 56px 86px 66px; gap: 14px; padding: 12px 0; border-bottom: 1px solid var(--hair); font-size: 14px; align-items: baseline; }
     .vl li:first-child, .bl li:first-child { padding-top: 0; }
     .vl li::before { content: counter(v, decimal-leading-zero); font: 700 20px/1 var(--f-swiss); color: var(--accent); letter-spacing: -.02em; }
     .vl .vm { display: contents; }
-    .vl .src { font-size: 12.5px; color: var(--ink3); }
+    .vl .src { font-size: 12.5px; color: var(--ink3); white-space: nowrap; }
     .vl .id { font: 500 12px/1.6 var(--f-mono); color: var(--ink3); }
     .vl .d { font-size: 12.5px; color: var(--ink3); font-variant-numeric: tabular-nums; }
     .vl .st { font-size: 12px; font-weight: 700; text-align: right; }
@@ -831,7 +831,7 @@ __ARC_DASHBOARD_DATA__
       }
       body += starDuo(typeBlk, drillBlk);
 
-      var vulnBlk = vulns.length ? starBlk("DARK SPOTS", "暗斑 · 漏洞", "问答与对局中暴露的薄弱点", '<ul class="spots">' + vulns.map(function (v) {
+      var vulnBlk = vulns.length ? starBlk("DARK SPOTS", "暗斑 · 漏洞", "漏洞清单里记下的薄弱点", '<ul class="spots">' + vulns.map(function (v) {
         return '<li><span class="dot' + (v.rePracticed ? " ok" : "") + '"></span><span>' + rich(v.desc) + '</span><span class="meta">' + (v.source ? esc(v.source) + " · " : "") + (v.id ? esc(v.id) + " · " : "") + esc(v.date) +
           '<em class="' + (v.rePracticed ? "ok" : "") + '">' + (v.rePracticed ? "已重练" : "待重练") + "</em></span></li>";
       }).join("") + "</ul>") : "";
@@ -1299,7 +1299,7 @@ __ARC_DASHBOARD_DATA__
             return "<tr><td>" + esc(t) + '</td><td class="num">' + num(o.passed) + '</td><td class="num">' + num(o.surrendered) + '</td><td class="num">' + num(o.open) + '</td><td class="num">' + sum(o) + "</td></tr>";
           }).join("") + "</tbody></table>" };
       }
-      if (vulns.length) mVulns = { icon: "bandage", title: "勘误表 · 漏洞", note: "问答与对局中暴露，按日期倒序", span: 8, inner: '<table class="tbl errata"><tbody>' + vulns.map(function (v) {
+      if (vulns.length) mVulns = { icon: "bandage", title: "勘误表 · 漏洞", note: "来自漏洞清单，按日期倒序", span: 8, inner: '<table class="tbl errata"><tbody>' + vulns.map(function (v) {
         return '<tr><td class="id' + (v.id ? "" : " none") + '">' + (v.id ? esc(v.id) : "—") + '</td><td class="desc">' + rich(v.desc) + '</td><td class="d">' + (v.source ? esc(v.source) + " · " : "") + esc(v.date) +
           '</td><td><span class="tag' + (v.rePracticed ? " ok" : "") + '">' + (v.rePracticed ? "已重练" : "待重练") + "</span></td></tr>";
       }).join("") + "</tbody></table>" };
@@ -1388,7 +1388,7 @@ __ARC_DASHBOARD_DATA__
             return "<tr><td>" + esc(t) + '</td><td class="num big">' + num(o.passed) + '</td><td class="num">' + num(o.surrendered) + '</td><td class="num">' + num(o.open) + '</td><td class="num">' + sum(o) + "</td></tr>";
           }).join("") + "</tbody></table>");
       }
-      if (vulns.length) html += sec("漏洞清单", "问答与对局中暴露，按日期倒序", '<ul class="vl">' + vulns.map(function (v) {
+      if (vulns.length) html += sec("漏洞清单", "各课题 gaps.md 的条目，按日期倒序", '<ul class="vl">' + vulns.map(function (v) {
         return "<li><span>" + rich(v.desc) + '</span><span class="vm"><span class="src">' + esc(v.source || "") + '</span><span class="id">' + esc(v.id || "") + '</span><span class="d">' + esc(v.date) + '</span><span class="st' +
           (v.rePracticed ? " ok" : "") + '">' + (v.rePracticed ? "已重练" : "待重练") + "</span></span></li>";
       }).join("") + "</ul>");

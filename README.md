@@ -7,7 +7,7 @@
 </p>
 
 <p align="center">
-  <a href="#功能"><img alt="Skills：7 个" src="https://img.shields.io/badge/Skills-7_%E4%B8%AA-2ea44f?style=for-the-badge"></a>
+  <a href="#功能"><img alt="Skills：8 个" src="https://img.shields.io/badge/Skills-8_%E4%B8%AA-2ea44f?style=for-the-badge"></a>
   <a href="#快速开始"><img alt="快速开始：安装" src="https://img.shields.io/badge/%E5%BF%AB%E9%80%9F%E5%BC%80%E5%A7%8B-%E5%AE%89%E8%A3%85-0969da?style=for-the-badge"></a>
   <a href="arc-learning-map/assets/skeleton.md"><img alt="学习地图：查看" src="https://img.shields.io/badge/%E5%AD%A6%E4%B9%A0%E5%9C%B0%E5%9B%BE-%E6%9F%A5%E7%9C%8B-8250df?style=for-the-badge"></a>
 </p>
@@ -29,6 +29,7 @@ arc-learning-skills 是一组 Claude Code skill，帮学生把一门课从讲义
 ```text
 arc-materials → arc-distill → ┬ arc-concept-quiz 查概念理解
                               ├ arc-examiner 出题自练 → arc-socratic-drill 对局解题
+                              ├ arc-gaps 补记漏洞
                               └ → arc-dashboard 进度看板
 ```
 
@@ -37,7 +38,8 @@ arc-materials → arc-distill → ┬ arc-concept-quiz 查概念理解
 - **概念问答** [`/arc-concept-quiz`](arc-concept-quiz/SKILL.md)：每批 5 题，让你用自己的话解释 `concepts.md` 里的概念，按核心点批改，答错当场讲清。当场答对先记为待复验，隔天复验通过才算掌握。
 - **出练习题** [`/arc-examiner`](arc-examiner/SKILL.md)：按指定材料或概念出 3 到 5 道题，题目存进 `problems/`，参考答案单独放在 `.local/answers/`，平时看不到。你说「随便出」时，它优先挑薄弱概念出题。
 - **引导解题** [`/arc-socratic-drill`](arc-socratic-drill/SKILL.md)：拿你给的一道题开一场对局，每轮先问你下一步怎么做，卡住时最多给两级提示。你自己写出完整的解题骨架才算通关。
-- **进度仪表盘** [`/arc-dashboard`](arc-dashboard/SKILL.md)：每次都从概念清单、问答与对局记录、出题记录重新计算进度，生成浏览器能直接打开的 `dashboard.html`。缺数据的板块直接隐藏，不编数字。
+- **漏洞清单** [`/arc-gaps`](arc-gaps/SKILL.md)：问你要补哪条漏洞，记进课题的 `gaps.md`，也能改写、删除已有条目。概念问答和引导解题里暴露的漏洞会自动记进同一份清单，出题和仪表盘都从这里读。旧问答、对局文件里的漏洞行，它会问过你再迁进清单。
+- **进度仪表盘** [`/arc-dashboard`](arc-dashboard/SKILL.md)：每次都从概念清单、问答与对局记录、漏洞清单、出题记录重新计算进度，生成浏览器能直接打开的 `dashboard.html`。缺数据的板块直接隐藏，不编数字。
 - **学习地图** [`/arc-learning-map`](arc-learning-map/SKILL.md)：在对话里列出每个 arc skill 管什么、怎么调用，并讲清三个做题类 skill 的区别。忘了该用哪个时，先看它。
 
 ## 快速开始
@@ -52,7 +54,7 @@ npx skills add ArcDent/arc-learning-skills -g -a claude-code -y
 npx skills add ArcDent/arc-learning-skills -a claude-code -y
 ```
 
-`-a claude-code` 表示装给 Claude Code，`-y` 跳过安装过程中的提问，直接装全部 7 个。用 Codex、Cursor 等其他 agent 时，去掉 `-a claude-code`，按提示选择。
+`-a claude-code` 表示装给 Claude Code，`-y` 跳过安装过程中的提问，直接装全部 8 个。用 Codex、Cursor 等其他 agent 时，去掉 `-a claude-code`，按提示选择。
 
 装好后，在学习仓库里把 `.local/` 加进 `.gitignore`。参考答案、token 和登记表都放在这里，别提交进 git：
 
