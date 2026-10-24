@@ -7,8 +7,9 @@
 | 数据源 | 读出什么 | 填哪些字段 |
 |---|---|---|
 | `{课题}/concepts.md` | 每条状态、类型、依赖 | `concepts`、`blocked` |
-| `{课题}/drills/*.md` | 首行 `<!-- arc-drill: -->` 状态、通关总结的 `- 漏洞：` 条目、日期 | `drills`、`vulnerabilities`、`vulnerabilityCounts`、`activity` |
-| `{课题}/concept-sessions/*.md` | 场次日期、概念名、结论，终场与作废补写的 `- 漏洞：` 条目 | `vulnerabilities`、`vulnerabilityCounts`、`activity` |
+| `{课题}/drills/*.md` | 首行 `<!-- arc-drill: -->` 状态、日期 | `drills`、`activity` |
+| `{课题}/concept-sessions/*.md` | 场次日期、概念名、结论 | `activity` |
+| `{课题}/gaps.md` | 漏洞条目：描述、id、日期、来源 | `vulnerabilities`、`vulnerabilityCounts` |
 | `.local/answers/index.jsonl` | date/topic/topics/difficulty/question_type/cognitive_level | `questions`、`vulnerabilities[].rePracticed`、`vulnerabilityCounts.open`、`activity` |
 | `.local/quiz-index.jsonl` | date/topic/results | `activity` |
 | `{课题}/notes/` | 产物文件数 | `guidance.materials` |
@@ -30,8 +31,9 @@
   "drills": {"total": 9, "passed": 6, "surrendered": 1, "open": 2,
              "byTopic": {"热统": {"passed": 4, "surrendered": 1, "open": 1}}},
   "vulnerabilities": [{"desc": "说不出相律中自由度的含义", "id": "D-012", "date": "2026-10-13", "source": "问答", "rePracticed": true},
-                      {"desc": "杠杆规则适用条件记错", "id": "D-031", "date": "2026-10-11", "source": "对局", "rePracticed": false}],
-  "vulnerabilityCounts": {"total": 2, "open": 1},
+                      {"desc": "杠杆规则适用条件记错", "id": "D-031", "date": "2026-10-11", "source": "对局", "rePracticed": false},
+                      {"desc": "分不清强度量与广延量", "date": "2026-10-09", "source": "手动", "rePracticed": false}],
+  "vulnerabilityCounts": {"total": 3, "open": 2},
   "activity": [{"date": "2026-10-13", "kind": "概念问答", "label": "相律与自由度"}],
   "blocked": [{"concept": "克劳修斯-克拉佩龙方程", "missing": ["相变潜热"]}],
   "questions": {"total": 15, "byDifficulty": {"基础": 5}, "byType": {"简答": 10}, "byCognitive": {"理解": 6}},
@@ -43,8 +45,8 @@
 
 - `concepts`：concepts.md 逐条读状态与类型，按状态、类型、课题三组计数。状态取值见 `arc-distill/assets/concept-format.md`，`byStatus` 四键固定：mastered ☑ / pending `待复验 @ 日期` / misconceived ⚠ / untested ☐。
 - `drills`：逐文件读首行状态标记计数，surrendered 与 open 分开计。
-- `vulnerabilities`：drill 通关总结、概念问答终场与作废补写里的 `- 漏洞：{描述} [D-xxx] @ 日期` 逐条抽出，「- 漏洞：无」不算；按日期倒序，最多 20 条。
-  - `source`：drill 的写「对局」，概念问答的写「问答」。
+- `vulnerabilities`：各课题 `gaps.md` 的条目逐条抽出，格式见 `arc-gaps/assets/gap-format.md`；问答文件、对局文件里残留的旧 `- 漏洞：` 行不读，要算进来先用 `/arc-gaps` 迁移。按日期倒序，最多 20 条。
+  - `source`：照抄条目的来源，取 问答 / 对局 / 对局（认输） / 手动。
   - `rePracticed`：漏洞带 `[D-xxx]` 时，`.local/answers/index.jsonl` 里存在同课题、`topics[]` 含该 id、日期不早于漏洞日期的题即为 true；没有 id 一律 false。
 - `vulnerabilityCounts`：`total` 为全部漏洞条数，`open` 为其中 `rePracticed` 为 false 的条数。两个数都按全部漏洞算，不受 `vulnerabilities` 最多 20 条的限制。
 - `activity`：对局、问答场次、出题与测验记录每条记一件事（日期 + 事件），按日期倒序取最近 8 条。

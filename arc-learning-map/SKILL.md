@@ -12,15 +12,14 @@ disable-model-invocation: true
 
 ## 铁律
 
-1. **仅手动调用**：arc 系列每个 skill 的 frontmatter 都带 `disable-model-invocation: true`，只能由用户用 `/<skill名>` 点名启动，skill 之间也不互相调用。用户问「该用哪个」时只指路，等用户发话。
+1. **仅手动调用**：arc 系列每个 skill 的 frontmatter 都带 `disable-model-invocation: true`，只能由用户用 `/<skill名>` 点名启动，skill 之间也不互相调用。输出地图后即停；用户问「该用哪个」也只指路，不替用户启动任何 arc skill。
 2. **只输出不落盘**：地图只在对话里输出，不写任何文件。
 3. **不读学习数据**：不碰 `concepts.md`、`drills/`、各 index 等学习记录。地图是纯静态知识，不给「你现在学到哪」的判断。
-4. **不代触发**：输出地图后即停，不替用户启动任何 arc skill。
 
 ## 数据源
 
 - 静态骨架：流程图、使用场景映射、易混区别都见 `assets/skeleton.md`，仅流程或易混关系变化时更新。
-- 职责与触发词：按前缀通配扫本 skill 目录（启动时给出的 Base directory）的同级 `../arc-*/SKILL.md`，不写死名单，读 frontmatter 的 `description`。全局、项目级哪种装法都适用，装了几个就列几个。新增 skill 自动纳入，改了 description 下次触发即反映。缺某段就如实标「未写明」，不编。
+- 职责与触发词：按前缀通配扫本 skill 目录（启动时给出的 Base directory）的同级 `../arc-*/SKILL.md`，不写死名单，读 frontmatter 的 `description`。全局、项目级哪种装法都适用，装了几个就列几个。缺某段就如实标「未写明」，不编。
 
 ## 输出格式
 
