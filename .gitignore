@@ -1,2 +1,8 @@
 /.claude
 /.serena
+
+# 工作流过程文件
+/TODOLIST.md
+/TODOLIST-DONE.md
+/todolist-done/
+/openspec/

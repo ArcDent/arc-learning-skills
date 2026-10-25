@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>学习进度</title>
 <style>
-  /* ============ 全局底座 ============ */
   * { margin: 0; padding: 0; box-sizing: border-box; }
   html { -webkit-text-size-adjust: 100%; }
   body { min-height: 100vh; -webkit-font-smoothing: antialiased; }
@@ -19,7 +18,7 @@
     --f-swiss: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", Arial, sans-serif;
   }
 
-  /* ============ 样式切换器（三种样式共用，配色在各自样式里） ============ */
+  /* 样式切换器：三种样式共用，配色写在各自样式里 */
   .switcher { position: fixed; top: 14px; right: 16px; z-index: 60; display: flex; align-items: center; gap: 2px; padding: 3px;
     border-radius: 999px; font: 500 12.5px/1 var(--f-sans); }
   .switcher button { font: inherit; letter-spacing: inherit; color: inherit; background: transparent; border: 0; border-radius: 999px; padding: 6px 12px; cursor: pointer; }
@@ -57,7 +56,7 @@ SOFTWARE. */
 </style>
 
 <style>
-  /* ============ 样式一 · 星图：首屏始终是夜空，下方内容可切明暗 ============ */
+  /* 样式一 · 星图：首屏始终是夜空，下方内容可切明暗 */
   :root.th-star {
     --space: #03050c; --ink: #e9ecf7; --ink2: #a9b1cb; --ink3: #6b7392; --hair: rgba(170, 185, 255, .13);
     --accent: #a9bcff; --accent-soft: rgba(169, 188, 255, .12); --glow: 1;
@@ -221,7 +220,7 @@ SOFTWARE. */
 </style>
 
 <style>
-  /* ============ 样式二 · 记录本：坐标纸、红笔批注、手绘图标 ============ */
+  /* 样式二 · 记录本：坐标纸、红笔批注、手绘图标 */
   :root.th-note {
     --paper: #f5f1e6; --paper-solid: #fbf8ef; --grid: rgba(52, 84, 128, .07); --grid2: rgba(52, 84, 128, .12);
     --ink: #1f1c16; --ink2: #4b463b; --ink3: #857e70; --rule: #d6cdb8; --rule-strong: #1f1c16;
@@ -422,7 +421,7 @@ SOFTWARE. */
 </style>
 
 <style>
-  /* ============ 样式三 · 网格：瑞士版式，黑白加一点红 ============ */
+  /* 样式三 · 网格：瑞士版式，黑白加一点红 */
   :root.th-grid {
     --bg: #f4f3ee; --ink: #0e0e0e; --ink2: #4a4a45; --ink3: #8b8a84; --hair: #d3d1c8; --accent: #e1251b;
     --st-mastered: #0e0e0e; --st-pending: #2a5bd7; --st-misconceived: #e1251b; --st-untested: #dad8cf;
@@ -627,7 +626,7 @@ SOFTWARE. */
 
   <div id="stage"></div>
 
-<!-- ==================== 数据注入槽 ====================
+<!-- 数据注入槽
      生成方式：用下方 JSON 整体替换注入槽里的占位符那一行（全文只此一处）。
      模块渲染规则：某模块对应数据为空数组/空对象时，该模块不渲染。
      全部模块皆空时渲染当前样式的引导块。JSON 必须合法，勿留注释与尾逗号。
@@ -677,7 +676,6 @@ __ARC_DASHBOARD_DATA__
     PARSE_ERROR = String(e && e.message ? e.message : e);
   }
 
-  /* ---------- 通用工具 ---------- */
   function esc(s) {
     return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) {
       return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
@@ -706,7 +704,7 @@ __ARC_DASHBOARD_DATA__
   function hash(s) { var h = 2166136261; s = String(s); for (var i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 16777619); } return h >>> 0; }
   function gauss(r) { return Math.sqrt(-2 * Math.log(1 - r())) * Math.cos(6.2831853 * r()); }
 
-  /* ---------- 从注入数据派生，三种样式共用 ---------- */
+  /* 从注入数据派生，三种样式共用 */
   var D = DATA || {};
   var C = obj(D.concepts), cbs = obj(C.byStatus), ct = sum(cbs);
   var bt = obj(C.byTopic), cTopics = Object.keys(bt).filter(function (t) { return sum(bt[t]) > 0; });
@@ -757,7 +755,7 @@ __ARC_DASHBOARD_DATA__
   var guideTail = num(G.materials) ? "当前可转材料 " + num(G.materials) + " 份" + (num(G.distillable) ? "，其中 " + num(G.distillable) + " 份还没凝练" : "") : "";
   function codes(list) { return list.map(function (c) { return "<code>" + esc(c) + "</code>"; }).join(""); }
 
-  /* ==================== 样式一 · 星图 ==================== */
+  /* 样式一 · 星图 */
   var HUE = { mastered: "255,216,138", pending: "143,184,255", misconceived: "255,139,123", untested: "214,224,252" };
   var BLEED = 40;
   var reduced = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -852,7 +850,6 @@ __ARC_DASHBOARD_DATA__
     return hero + '<main class="content">' + body + "<footer><span>ARC · KNOWLEDGE ATLAS</span><span>" + esc(D.generated || "") + "</span></footer></main>";
   }
 
-  /* ---------- 星图画布 ---------- */
   function prep(cv, SW, SH) {
     var dpr = Math.min(window.devicePixelRatio || 1, 2);
     cv.width = Math.round(SW * dpr); cv.height = Math.round(SH * dpr);
@@ -1125,7 +1122,7 @@ __ARC_DASHBOARD_DATA__
     return function () { clearTimeout(timer); if (ro) ro.disconnect(); window.removeEventListener("resize", schedule); };
   }
 
-  /* ==================== 样式二 · 记录本 ==================== */
+  /* 样式二 · 记录本 */
   // 手绘笔迹用固定种子，每次打开都一样
   var R = rng(20261017);
   function jit(a) { return (R() - .5) * 2 * a; }
@@ -1327,7 +1324,7 @@ __ARC_DASHBOARD_DATA__
       "<span>" + (D.generated ? "记录止于 " + esc(D.generated) : "arc-dashboard") + "</span></footer></div>";
   }
 
-  /* ==================== 样式三 · 网格 ==================== */
+  /* 样式三 · 网格 */
   function pad(n) { return (n < 10 ? "0" : "") + n; }
   function renderGrid() {
     var W = WORDS.plain;
@@ -1405,7 +1402,6 @@ __ARC_DASHBOARD_DATA__
     return '<div class="wrap">' + out + "<main>" + html + "</main><footer><span>ARC-DASHBOARD</span><span>" + esc(D.generated || "") + "</span></footer></div>";
   }
 
-  /* ==================== 样式与明暗调度 ==================== */
   var THEMES = { star: { render: renderStar, mount: mountStar }, note: { render: renderNote }, grid: { render: renderGrid } };
   var DEFAULT_THEME = "star";
   var root = document.documentElement, stage = document.getElementById("stage"), cleanup = null;
